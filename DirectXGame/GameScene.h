@@ -9,6 +9,7 @@
 #include "WorldTransform.h"
 #include<vector>
 #include"Player.h"
+#include"DebugCamera.h"
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -63,6 +64,13 @@ private: // メンバ変数
 
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
+
+	//デバックカメラ有効
+	bool isDebugCameraActive_ = false;
+
+	//デバックカメラ
+	DebugCamera* debugCamera_ = nullptr;
+
 
 	/// <summary>
 	/// ゲームシーン用

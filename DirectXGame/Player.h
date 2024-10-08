@@ -1,7 +1,7 @@
 #pragma once
 #include "Model.h"
 #include"WorldTransform.h"
-
+#include<Input.h>
 
 /// <summary>
 ///	自キャラ
@@ -42,7 +42,11 @@ private://関数（メンバ変数）
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
 
+	//キーボード入力
+	Input* input_ = nullptr;
 
-	ViewProjection* viewProjection_ = nullptr;
+
+
+	//ViewProjection* viewProjection_ = nullptr;
 
 };

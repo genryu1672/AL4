@@ -72,6 +72,9 @@
     <ClCompile Include="GameScene.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
+    <ClCompile Include="MathUtilityForText.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3d\ViewProjection.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="GameScene.h">
       <Filter>ソース ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MathUtilityForText.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
