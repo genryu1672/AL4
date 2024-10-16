@@ -52,22 +52,27 @@ void Player::Update() {
 	//キャラクターの移動速さ
 	const float kCharacterSpeed = 0.2f;
 
+	//回転速さ[ラジアン/frame]
+	const float kRotSpeed = 0.02f;
+	
 	//押した方向で移動ベクトルを変更(左右)
-	if (input_->PushKey(DIK_LEFT))
+	if (input_->PushKey(DIK_A))//左
 	{
 		move.x -= kCharacterSpeed;
+		worldTransform_.rotation_.y = -1;
 	}
-	else if (input_->PushKey(DIK_RIGHT))
+	else if (input_->PushKey(DIK_D))//右
 	{
 		move.x += kCharacterSpeed;
+		worldTransform_.rotation_.y = 2;
 	}
 
 	//押した方向で移動ベクトルを変更（上下）
-	if (input_->PushKey(DIK_UP)) 
+	if (input_->PushKey(DIK_W)) //上
 	{
 		move.y += kCharacterSpeed;
 	} 
-	else if (input_->PushKey(DIK_DOWN)) 
+	else if (input_->PushKey(DIK_S)) //下
 	{
 		move.y -= kCharacterSpeed;
 	}
