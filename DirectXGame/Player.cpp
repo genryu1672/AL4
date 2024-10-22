@@ -80,9 +80,9 @@ void Player::Update() {
 	Attack();
 
 	//弾更新
-	if (bullet_)
+	for(PlayerBullet*bullet:bullets_)
 	{
-		bullet_->Update();
+		bullet->Update();
 	}
 
 
@@ -120,9 +120,9 @@ void Player::Draw(ViewProjection& viewProjection) {
 model_->Draw(worldTransform_, viewProjection, textureHandle_);	
 
  //弾描画
-if (bullet_)
+for(PlayerBullet*bullet:bullets_)
 {
-		bullet_->Draw(viewProjection);
+		bullet->Draw(viewProjection);
 }
 
 }
@@ -149,15 +149,32 @@ void Player::Rotate() {
 void Player::Attack() {
 
 	//攻撃処理
-	if (input_->PushKey(DIK_SPACE))
+	if (input_->TriggerKey(DIK_SPACE))//PushKeyにすれば連射出来る
 	{
+		//弾があれば解放する
+		//if (bullet_)
+		//{
+		//	delete bullet_;
+		//	bullet_ = nullptr;
+		//}
+		
 		//弾を生成し、初期化
 		PlayerBullet* newBullet = new PlayerBullet();
 		newBullet->Initialize(model_, worldTransform_.translation_);
 
 		//弾を登録する
-		bullet_ = newBullet;
+		bullets_.push_back (newBullet);
 	}
 
 
+}
+
+Player::~Player() {
+
+	//bullet_の開放
+	for (PlayerBullet* bullet : bullets_) 
+	{
+		delete bullet;
+		//bullet->Draw(delete);
+	}
 }

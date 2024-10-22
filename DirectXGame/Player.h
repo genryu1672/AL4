@@ -3,6 +3,7 @@
 #include"WorldTransform.h"
 #include<Input.h>
 #include"PlayerBullet.h"
+#include<List>
 /// <summary>
 ///	自キャラ
 /// </summary>
@@ -31,6 +32,7 @@ public://引数を書くところ
 
 	void Attack();
 
+	~Player();
 
 private://関数（メンバ変数）
 	
@@ -49,9 +51,9 @@ private://関数（メンバ変数）
 	Input* input_ = nullptr;
 
 	//弾
-	PlayerBullet* bullet_ = nullptr;
+	std::list<PlayerBullet*> bullets_;
 
-
+	
 
 	//ViewProjection* viewProjection_ = nullptr;
 
