@@ -2,7 +2,7 @@
 #include "Model.h"
 #include"WorldTransform.h"
 #include<Input.h>
-
+#include"PlayerBullet.h"
 /// <summary>
 ///	自キャラ
 /// </summary>
@@ -27,7 +27,10 @@ public://引数を書くところ
 	/// </summary>
 	void Draw(ViewProjection&viewProjection);
 
-	
+	void Rotate();
+
+	void Attack();
+
 
 private://関数（メンバ変数）
 	
@@ -44,6 +47,9 @@ private://関数（メンバ変数）
 
 	//キーボード入力
 	Input* input_ = nullptr;
+
+	//弾
+	PlayerBullet* bullet_ = nullptr;
 
 
 

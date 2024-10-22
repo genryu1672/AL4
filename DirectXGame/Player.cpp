@@ -52,19 +52,18 @@ void Player::Update() {
 	//キャラクターの移動速さ
 	const float kCharacterSpeed = 0.2f;
 
-	//回転速さ[ラジアン/frame]
-	const float kRotSpeed = 0.02f;
+	
 	
 	//押した方向で移動ベクトルを変更(左右)
 	if (input_->PushKey(DIK_A))//左
 	{
 		move.x -= kCharacterSpeed;
-		worldTransform_.rotation_.y = -1;
+		
 	}
 	else if (input_->PushKey(DIK_D))//右
 	{
 		move.x += kCharacterSpeed;
-		worldTransform_.rotation_.y = 2;
+		
 	}
 
 	//押した方向で移動ベクトルを変更（上下）
@@ -77,6 +76,15 @@ void Player::Update() {
 		move.y -= kCharacterSpeed;
 	}
 		
+	//キャラクター攻撃処理
+	Attack();
+
+	//弾更新
+	if (bullet_)
+	{
+		bullet_->Update();
+	}
+
 
 	//座標移動（ベクトルの加算）
 	worldTransform_.translation_+=move;
@@ -97,8 +105,9 @@ void Player::Update() {
 	worldTransform_.translation_.x = std::min(worldTransform_.translation_.x, +kMoveLimitX);
 	worldTransform_.translation_.y = std::max(worldTransform_.translation_.y, -kMoveLimitY);
 	worldTransform_.translation_.y = std::min(worldTransform_.translation_.y, +kMoveLimitY);
+	
 	//行列更新
-
+	worldTransform_.UpdateMatrix();
 }
 
 /// <summary>
@@ -109,5 +118,46 @@ void Player::Update() {
 void Player::Draw(ViewProjection& viewProjection) {
 
 model_->Draw(worldTransform_, viewProjection, textureHandle_);	
+
+ //弾描画
+if (bullet_)
+{
+		bullet_->Draw(viewProjection);
+}
+
+}
+
+void Player::Rotate() {
+
+	// 回転速さ[ラジアン/frame]
+	const float kRotSpeed = 0.02f;
+	
+	//左
+	if (input_->PushKey(DIK_LEFT))
+	{
+		worldTransform_.rotation_.x -= kRotSpeed;
+	}
+	
+	//右
+	if (input_->PushKey(DIK_RIGHT)) 
+	{
+		worldTransform_.rotation_.x += kRotSpeed;
+	}
+
+}
+
+void Player::Attack() {
+
+	//攻撃処理
+	if (input_->PushKey(DIK_SPACE))
+	{
+		//弾を生成し、初期化
+		PlayerBullet* newBullet = new PlayerBullet();
+		newBullet->Initialize(model_, worldTransform_.translation_);
+
+		//弾を登録する
+		bullet_ = newBullet;
+	}
+
 
 }
