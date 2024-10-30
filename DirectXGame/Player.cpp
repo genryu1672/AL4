@@ -47,7 +47,19 @@ void Player::Update() {
 	//キャラクターの移動速さ
 	 const float kCharacterSpeed = 0.2f;
 
-	
+	//デスフラグの立った弾を削除
+	 bullets_.remove_if([](PlayerBullet* bullet) {
+		 if (bullet->IsDead()) {
+			 delete bullet;
+			 return true;
+		 }
+		 return false;
+	 });
+
+
+
+
+
 	//押した方向で移動ベクトルを変更(左右)
 	 if (input_->PushKey(DIK_LEFT))//左
 	{
