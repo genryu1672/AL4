@@ -30,7 +30,7 @@ public://引数を書くところ
 
 	void Rotate();
 
-	void Move();
+	//void Move();
 
 	void Attack();
 
