@@ -8,3 +8,6 @@ struct Vector3 final {
 	float y;
 	float z;
 };
+
+//ベクトル変換
+Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m);

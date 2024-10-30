@@ -4,9 +4,9 @@
 #include "WorldTransform.h"
 class PlayerBullet {
 
-	public:
+	public://メンバ関数
 	//初期化
-	void Initialize(Model* model_, const Vector3& position);
+	void Initialize(Model* model_, const Vector3& position,const Vector3&velocity);
 	
 	//更新
 	void Update();
@@ -14,7 +14,7 @@ class PlayerBullet {
 	//描画
 	void Draw(const ViewProjection& viewProjection);
 
-	private:
+	private://メンバ変数
 	
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -24,4 +24,8 @@ class PlayerBullet {
 
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0u;
+
+	//速度
+	Vector3 velocity_;
+
 };
