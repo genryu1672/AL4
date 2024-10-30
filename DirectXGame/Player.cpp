@@ -8,6 +8,7 @@
 #include <ViewProjection.h>
 #include<MathUtilityForText.h>
 #include<imgui.h>
+#include <GameScene.cpp>
 /// <summary>
 /// 初期化
 /// </summary>
@@ -53,25 +54,24 @@ void Player::Update() {
 	const float kCharacterSpeed = 0.2f;
 
 	
-	
 	//押した方向で移動ベクトルを変更(左右)
-	if (input_->PushKey(DIK_A))//左
+	if (input_->PushKey(DIK_LEFT))//左
 	{
 		move.x -= kCharacterSpeed;
 		
 	}
-	else if (input_->PushKey(DIK_D))//右
+	else if (input_->PushKey(DIK_RIGHT))//右
 	{
 		move.x += kCharacterSpeed;
 		
 	}
 
 	//押した方向で移動ベクトルを変更（上下）
-	if (input_->PushKey(DIK_W)) //上
+	if (input_->PushKey(DIK_UP)) //上
 	{
 		move.y += kCharacterSpeed;
 	} 
-	else if (input_->PushKey(DIK_S)) //下
+	else if (input_->PushKey(DIK_DOWN)) //下
 	{
 		move.y -= kCharacterSpeed;
 	}
@@ -108,6 +108,17 @@ void Player::Update() {
 	
 	//行列更新
 	worldTransform_.UpdateMatrix();
+
+	// プレイヤーの旋回処理
+	Rotate();
+
+	//プレイヤーの移動処理
+	Move();
+
+	//プレイヤーの攻撃処理
+	Attack();
+
+
 }
 
 /// <summary>
@@ -127,19 +138,64 @@ for(PlayerBullet*bullet:bullets_)
 
 }
 
+
+
+
+void Player::Move() {
+// キャラクターの移動ベクトル
+Vector3 move = {0, 0, 0};
+// キャラクターの移動速さ
+const float kCharacterSpeed = 0.4f;
+// 押した方向で移動ベクトルを変更
+if (input_->PushKey(DIK_LEFT)) {
+		move += Vector3(-kCharacterSpeed, 0, 0);
+} else if (input_->PushKey(DIK_RIGHT)) {
+		move += Vector3(+kCharacterSpeed, 0, 0);
+}
+// 押した方向で移動ベクトルを変更
+if (input_->PushKey(DIK_DOWN)) {
+		move += Vector3(0, -kCharacterSpeed, 0);
+} else if (input_->PushKey(DIK_UP)) {
+		move += Vector3(0, +kCharacterSpeed, 0);
+}
+// 座標移動（ベクトルの加算）
+worldTransform_.translation_.x += move.x;
+worldTransform_.translation_.y += move.y;
+worldTransform_.translation_.z += move.z;
+// 移動限界座標
+//const float kMoveLimitX = 34.0f;
+//const float kMoveLimitY = 18.0f;
+// 範囲を超えない処理
+//worldTransform_.translation_.x = max(worldTransform_.translation_.x, -kMoveLimitX);
+//worldTransform_.translation_.x = min(worldTransform_.translation_.x, kMoveLimitX);
+//worldTransform_.translation_.y = max(worldTransform_.translation_.y, -kMoveLimitY);
+//worldTransform_.translation_.y = min(worldTransform_.translation_.y, kMoveLimitY);
+// キャラクターの座標を画面表示する処理
+ImGui::Begin("Player");
+ImGui::SliderFloat3("Translation", (float*)&worldTransform_.translation_, -100, 100);
+ImGui::InputFloat("Rotation", (float*)&worldTransform_.rotation_.y);
+ImGui::End();
+}
+
+
+
+
+
+
+
 void Player::Rotate() {
 
 	// 回転速さ[ラジアン/frame]
 	const float kRotSpeed = 0.02f;
 	
 	//左
-	if (input_->PushKey(DIK_LEFT))
+	if (input_->PushKey(DIK_A))
 	{
 		worldTransform_.rotation_.x -= kRotSpeed;
 	}
 	
 	//右
-	if (input_->PushKey(DIK_RIGHT)) 
+	if (input_->PushKey(DIK_D)) 
 	{
 		worldTransform_.rotation_.x += kRotSpeed;
 	}
@@ -163,7 +219,7 @@ void Player::Attack() {
 		Vector3 velocity(0, 0, kBulletSpeed);
 
 		//速度ベクトルを自機の向きに合わせて回転させる
-		//velocity = TransformNormal(velocity, TransformNormal);//ベクトルの回転　TransformNormal
+		velocity = TransformNormal(velocity, worldTransform_.matWorld_); // ベクトルの回転　TransformNormal
 
 
 		//弾を生成し、初期化
