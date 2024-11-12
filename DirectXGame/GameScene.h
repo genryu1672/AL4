@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Audio.h"
 #include "DirectXCommon.h"
 #include "Input.h"
@@ -10,6 +9,7 @@
 #include<vector>
 #include"Player.h"
 #include"DebugCamera.h"
+#include"Enemy.h"
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -61,6 +61,10 @@ private: // メンバ変数
 
 	//自キャラ
 	Player* player_=nullptr;
+
+	//敵
+	Enemy* enemy_ = nullptr;
+
 
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
