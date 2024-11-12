@@ -16,7 +16,7 @@ void Enemy::Initialize(Model* model,  const Vector3& position,const Vector3&velo
 	worldTransform_.translation_ = position; 
 
 	//移動の初期化
-	worldTransform_.translation_ = velocity;
+	 velocity_=velocity;
 
 }
 
