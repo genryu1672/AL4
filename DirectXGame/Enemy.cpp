@@ -28,10 +28,24 @@ void Enemy::Update() {
 	// 弾の座標を移動させる（１フレーム分の移動量を足しこむ）
 	worldTransform_.translation_ += velocity_;
 
-	
+	switch (phase_) {
+	case Enemy::Phase::Approach:	
+	default:
+		//移動（ベクトルを加算）
+		worldTransform_.translation_ += approachVel;	
 
+		//規定の位置に到達したら離脱
+		if (worldTransform_.translation_.z < 0.0f)
+		{
+			phase_ = Phase::Leave;	
+		}
+		break;
 
-
+	case Enemy::Phase::Leave:
+		// 移動（ベクトルを加算)
+		worldTransform_.translation_ += leaveVel;
+		break;
+	}
 }
 
 void Enemy::Draw(ViewProjection& viewProjection) {

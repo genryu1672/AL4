@@ -1,6 +1,7 @@
 #pragma once
 #include <WorldTransform.h>
 #include <Model.h>
+#include <Enemy.h>
 
 class Enemy 
 {
@@ -24,4 +25,21 @@ private: // 関数（メンバ変数）
 
 	// 速度
 	Vector3 velocity_;
+
+	//接近速度
+	Vector3 approachVel;
+
+	//離脱速度
+	Vector3 leaveVel;
+
+
+	//行動フェーズ
+	enum class Phase
+	{
+		Approach,//接近する
+		Leave,//離脱する
+	};
+
+	//初期フェーズ
+	Phase phase_ = Phase::Approach;
 };
