@@ -32,7 +32,6 @@ private: // 関数（メンバ変数）
 	//離脱速度
 	Vector3 leaveVel;
 
-
 	//行動フェーズ
 	enum class Phase
 	{
