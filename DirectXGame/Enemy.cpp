@@ -34,8 +34,8 @@ void Enemy::Update() {
 	// 行列更新
 	worldTransform_.UpdateMatrix();
 
-	// 弾の座標を移動させる（１フレーム分の移動量を足しこむ）
-	worldTransform_.translation_ += velocity_;
+	//// 弾の座標を移動させる（１フレーム分の移動量を足しこむ）
+	//worldTransform_.translation_ += velocity_;
 
 
 

@@ -46,7 +46,7 @@ void GameScene::Initialize() {
 	enemy_ = new Enemy();
 
 	//敵の初期化(ここをいじれば敵の位置が変わる）
-	enemy_->Initialize(model_, Vector3(0.0f, 6.0f, 24.0f), Vector3(0.0f, 0.0f, -1.0f));
+	enemy_->Initialize(model_, Vector3(0.0f, 6.0f, 50.0f), Vector3(0.0f, 0.0f, -1.0f));
 
 	//デバックカメラの生成
 	debugCamera_ = new DebugCamera(1280, 720);
