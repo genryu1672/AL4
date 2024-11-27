@@ -15,8 +15,7 @@ public://引数を書くところ
 	// 敵の弾の発射関数
 	void Fire();
 
-	//発射間隔
-	static const int kFireInterval = 60;
+
 
 private: // メンバ関数
 	
@@ -49,8 +48,11 @@ private: // メンバ関数
 	Phase phase_ = Phase::Approach;
 
 	//敵の弾
-	std::list<EnemyBullet*> bullets_;
-
+	std::list<std::shared_ptr<EnemyBullet>> bullets_;
+	
 	//発射タイマー
 	int32_t fireTimer = 0;
+
+	// 発射間隔
+	static const int kFireInterval = 60;
 };
