@@ -2,6 +2,7 @@
 #include "MathUtilityForText.h"
 #include "Model.h"
 #include "WorldTransform.h"
+#include"PlayerBullet.h"
 class PlayerBullet {
 
 	public://メンバ関数

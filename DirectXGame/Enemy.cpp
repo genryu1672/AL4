@@ -20,6 +20,8 @@ void Enemy::Initialize(Model* model,  const Vector3& position,const Vector3&velo
 
 	 //接近の初期化
 	 phase_ = Phase::Approach;
+		
+	 
 	 // 接近速度の初期化
 	 //approachVel=Vector3(0.0f,0.0f,0.01f);
 
@@ -37,7 +39,8 @@ void Enemy::Update() {
 	//// 弾の座標を移動させる（１フレーム分の移動量を足しこむ）
 	//worldTransform_.translation_ += velocity_;
 
-
+	 // 敵の発射関数の呼び出し
+	Fire();
 
 	switch (phase_) {
 	case Enemy::Phase::Approach:	
@@ -61,5 +64,30 @@ void Enemy::Update() {
 
 void Enemy::Draw(ViewProjection& viewProjection) {
 
-	model_->Draw(worldTransform_, viewProjection, textureHandle_);
+	model_->Draw(worldTransform_, viewProjection, textureHandle_); }
+
+
+// 敵の攻撃処理
+void Enemy::Fire() 
+{
+	//敵の弾の速度
+	const float kBulletSpeed = 1.0f;
+
+	Vector3 velocity(0, 0, -kBulletSpeed);
+
+	//速度ベクトルをプレイヤーの向きに合わせて回転させる
+	velocity = TransformNormal(velocity, worldTransform_.matWorld_);
+
+	//敵の弾を生成し、初期化
+	EnemyBullet* newBullet = new EnemyBullet();
+	newBullet->Initialize(model_, worldTransform_.translation_, velocity);
+
+	//弾を登録する
+	bullets_.push_back	(newBullet);
+
+	//発射タイマーを初期化
+	fireTimer = kFireInterval;
+
+	
+
 }

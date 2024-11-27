@@ -2,7 +2,7 @@
 #include <WorldTransform.h>
 #include <Model.h>
 #include <Enemy.h>
-
+#include"EnemyBullet.h"
 class Enemy 
 {
 public://引数を書くところ
@@ -12,7 +12,13 @@ public://引数を書くところ
 	
 	void Draw(ViewProjection& viewProjection);
 
-private: // 関数（メンバ変数）
+	// 敵の弾の発射関数
+	void Fire();
+
+	//発射間隔
+	static const int kFireInterval = 60;
+
+private: // メンバ関数
 	
 	// ワールド変換データ
 	WorldTransform worldTransform_;
@@ -41,4 +47,10 @@ private: // 関数（メンバ変数）
 
 	//初期フェーズ
 	Phase phase_ = Phase::Approach;
+
+	//敵の弾
+	std::list<EnemyBullet*> bullets_;
+
+	//発射タイマー
+	int32_t fireTimer = 0;
 };
