@@ -3,6 +3,10 @@
 #include <Model.h>
 #include <Enemy.h>
 #include"EnemyBullet.h"
+
+//自機クラスの前方宣言
+class Player;
+
 class Enemy 
 {
 public://引数を書くところ
@@ -15,7 +19,8 @@ public://引数を書くところ
 	// 敵の弾の発射関数
 	void Fire();
 
-
+	//setterの利用
+	void SetPlayer(Player* player) { player_ = player; }
 
 private: // メンバ関数
 	
@@ -55,4 +60,10 @@ private: // メンバ関数
 
 	// 発射間隔
 	static const int kFireInterval = 60;
+
+	//自キャラ
+	Player* player_=nullptr;
+
+	//敵キャラのワールド座標を取得
+	Vector3 GetWorldPosition();
 };

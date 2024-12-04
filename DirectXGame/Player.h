@@ -55,7 +55,8 @@ private://関数（メンバ変数）
 	//弾
 	std::list<PlayerBullet*> bullets_;
 
-	
+	//自キャラのワールド座標を取得
+	Vector3 GetWorldPosition();
 
 	//ViewProjection* viewProjection_ = nullptr;
 
