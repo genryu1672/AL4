@@ -22,6 +22,9 @@ public://引数を書くところ
 	//setterの利用
 	void SetPlayer(Player* player) { player_ = player; }
 
+	// 敵キャラのワールド座標を取得
+	Vector3 GetWorldPosition();
+
 private: // メンバ関数
 	
 	// ワールド変換データ
@@ -64,6 +67,10 @@ private: // メンバ関数
 	//自キャラ
 	Player* player_=nullptr;
 
-	//敵キャラのワールド座標を取得
-	Vector3 GetWorldPosition();
+	Vector3 playerWorldPosition;
+
+	Vector3 enemyWorldPosition;
+
+	// 正規化
+	//Vector3 Normalize();
 };

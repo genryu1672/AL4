@@ -1,7 +1,8 @@
 #include "Enemy.h"
 #include <MathUtilityForText.h>
 #include <TextureManager.h>
-
+#include"Player.h"
+#include <cassert>
 void Enemy::Initialize(Model* model,  const Vector3& position,const Vector3&velocity) {
 
 	// 引数として受け取ったデータをメンバ変数に記録する
@@ -86,16 +87,43 @@ void Enemy::Draw(ViewProjection& viewProjection) {
 }
 
 
+
 // 敵の攻撃処理
 void Enemy::Fire() 
 {
-	//敵の弾の速度
+	assert(player_);
+	
+	//敵の弾の速さ
 	const float kBulletSpeed = 1.0f;
+	
+	Vector3 Normalize(const Vector3& v) {
+		float length = Length(v);
+		assert(length != 0.0f);
+		return {v.x / length, v.y / length, v.z / length};
+	}
+
+	//自キャラのワールド座標を取得
+	playerWorldPosition = player_->GetWorldPosition();
+
+	//敵キャラのワールド座標を取得
+	enemyWorldPosition = GetWorldPosition();
+
+	//敵キャラから自キャラへの差分ベクトルを求める(当たり判定)
+	float difference=(enemyWorldPosition.x - playerWorldPosition.x) * (enemyWorldPosition.x - playerWorldPosition.x) 
+		+ (enemyWorldPosition.y - playerWorldPosition.y) * (enemyWorldPosition.y - playerWorldPosition.y) +
+	    (enemyWorldPosition.z - playerWorldPosition.z) * (enemyWorldPosition.z - playerWorldPosition.z);
+	    
+	
+	
+	//ベクトルの正規化
+	float Normalize;
+	=Normalize(Vector3 difference);
+
 
 	Vector3 velocity(0, 0, -kBulletSpeed);
 
 	//速度ベクトルをプレイヤーの向きに合わせて回転させる
-	velocity = TransformNormal(velocity, worldTransform_.matWorld_);
+	velocity = TransformNormal(velocity, worldTransform_.matWorld_);	
 
 	//敵の弾を生成し、初期化
 	std::shared_ptr<EnemyBullet> newBullet(new EnemyBullet);
@@ -114,4 +142,6 @@ Vector3 Enemy::GetWorldPosition()
 	worldPos.x = worldTransform_.translation_.x;
 	worldPos.y = worldTransform_.translation_.y;
 	worldPos.z = worldTransform_.translation_.z;
+
+	return worldPos;
 }
