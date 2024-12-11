@@ -3,6 +3,39 @@
 #include <TextureManager.h>
 #include"Player.h"
 #include <cassert>
+
+float Dot(const Vector3& v1, const Vector3& v2) { return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z; }
+float Length(const Vector3& v) { return std::sqrt(Dot(v, v)); }
+
+
+	Vector3 Normalize(const Vector3& v) {
+	float length = Length(v);
+	assert(length != 0.0f);
+	return {v.x / length, v.y / length, v.z / length};
+}
+
+	static Vector3 Subtract(const Vector3& v1,const Vector3&v2) 
+	{ 
+	Vector3 result;
+		result.x = v1.x - v2.x;
+		result.y = v1.y - v2.y;
+		result.z = v1.z - v2.z;
+
+	//返り値
+	return result;
+	}
+
+	static Vector3 Multiply(const Vector3& v1, const float v2)
+	{
+		Vector3 result;
+	  result.x = v1.x * v2;
+	  result.y = v1.y * v2;
+	  result.z = v1.z * v2;
+
+	  //返り値
+	  return result;
+	}
+
 void Enemy::Initialize(Model* model,  const Vector3& position,const Vector3&velocity) {
 
 	// 引数として受け取ったデータをメンバ変数に記録する
@@ -42,9 +75,9 @@ void Enemy::Update() {
 
 	switch (phase_) {
 	case Enemy::Phase::Approach:	
-	//default:
+	default:
 		//移動（ベクトルを加算）
-		worldTransform_.translation_ += Vector3(0.0f,0.0f,-0.1f);
+		worldTransform_.translation_.z += -0.1f;
 
 		 // 敵の発射関数の呼び出し
 		if (fireTimer<=0) {
@@ -54,15 +87,11 @@ void Enemy::Update() {
 		} else {
 			fireTimer--;
 		}
-
-
 		//規定の位置に到達したら離脱
 		if (worldTransform_.translation_.z < 0.0f)
 		{
 			phase_ = Phase::Leave;	
 		}
-
-
 		break;
 
 	case Enemy::Phase::Leave:
@@ -94,36 +123,26 @@ void Enemy::Fire()
 	assert(player_);
 	
 	//敵の弾の速さ
-	const float kBulletSpeed = 1.0f;
+	const float kBulletSpeed = -1.0f;
 	
-	Vector3 Normalize(const Vector3& v) {
-		float length = Length(v);
-		assert(length != 0.0f);
-		return {v.x / length, v.y / length, v.z / length};
-	}
 
 	//自キャラのワールド座標を取得
 	playerWorldPosition = player_->GetWorldPosition();
-
 	//敵キャラのワールド座標を取得
-	enemyWorldPosition = GetWorldPosition();
+	enemyWorldPosition = Enemy::GetWorldPosition();
 
 	//敵キャラから自キャラへの差分ベクトルを求める(当たり判定)
-	float difference=(enemyWorldPosition.x - playerWorldPosition.x) * (enemyWorldPosition.x - playerWorldPosition.x) 
-		+ (enemyWorldPosition.y - playerWorldPosition.y) * (enemyWorldPosition.y - playerWorldPosition.y) +
-	    (enemyWorldPosition.z - playerWorldPosition.z) * (enemyWorldPosition.z - playerWorldPosition.z);
-	    
-	
-	
+	Vector3 difference = Subtract(enemyWorldPosition, playerWorldPosition);
 	//ベクトルの正規化
-	float Normalize;
-	=Normalize(Vector3 difference);
+	Vector3 normalize = Normalize(difference);
+	
+	//ベクトルの長さを、速さに合わせる
+	Vector3 velocity = Multiply(normalize,kBulletSpeed);
 
-
-	Vector3 velocity(0, 0, -kBulletSpeed);
+	//Vector3 velocity(0, 0, -kBulletSpeed);
 
 	//速度ベクトルをプレイヤーの向きに合わせて回転させる
-	velocity = TransformNormal(velocity, worldTransform_.matWorld_);	
+	//velocity = TransformNormal(velocity, worldTransform_.matWorld_);	
 
 	//敵の弾を生成し、初期化
 	std::shared_ptr<EnemyBullet> newBullet(new EnemyBullet);
@@ -139,9 +158,9 @@ Vector3 Enemy::GetWorldPosition()
 	// ワールド座標を入れる変数
 	Vector3 worldPos;
 	// ワールド行列の平行移動成分を取得（ワールド座標）
-	worldPos.x = worldTransform_.translation_.x;
-	worldPos.y = worldTransform_.translation_.y;
-	worldPos.z = worldTransform_.translation_.z;
+	worldPos.x = worldTransform_.matWorld_.m[3][0];
+	worldPos.y = worldTransform_.matWorld_.m[3][1];
+	worldPos.z = worldTransform_.matWorld_.m[3][2];
 
 	return worldPos;
 }

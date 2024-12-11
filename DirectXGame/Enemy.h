@@ -1,8 +1,9 @@
 #pragma once
+#include<cmath>
 #include <WorldTransform.h>
 #include <Model.h>
-#include <Enemy.h>
 #include"EnemyBullet.h"
+#include<list>
 
 //自機クラスの前方宣言
 class Player;
