@@ -26,6 +26,9 @@ public://引数を書くところ
 	// 敵キャラのワールド座標を取得
 	Vector3 GetWorldPosition();
 
+	// 衝突を検出したら呼び出されるコールバック関数
+	void OnCollision();
+		
 private: // メンバ関数
 	
 	// ワールド変換データ
@@ -72,6 +75,9 @@ private: // メンバ関数
 
 	Vector3 enemyWorldPosition;
 
-	// 正規化
-	//Vector3 Normalize();
+	// 弾
+	std::list<EnemyBullet*> enemybullets_;
+
+	// 弾リストを取得
+	const std::list<EnemyBullet*>& GetEnemyBullets() const { return enemybullets_; }
 };

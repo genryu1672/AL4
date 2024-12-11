@@ -39,6 +39,8 @@ public://引数を書くところ
 	// 自キャラのワールド座標を取得
 	Vector3 GetWorldPosition();
 
+	//衝突を検出したら呼び出されるコールバック関数
+	void OnCollision();
 private://関数（メンバ変数）
 	
 
@@ -60,4 +62,6 @@ private://関数（メンバ変数）
 
 	//ViewProjection* viewProjection_ = nullptr;
 
+	//弾リストを取得
+	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
 };

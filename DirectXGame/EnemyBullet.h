@@ -19,6 +19,9 @@ public: // メンバ関数
 	//寿命＜ｆｒｍ＞
 	static const int32_t kLifeTime = 60 * 5;
 
+	// 衝突を検出したら呼び出されるコールバック関数
+	void OnCollision();
+
 private: // メンバ変数
 	
 	// ワールド変換データ
