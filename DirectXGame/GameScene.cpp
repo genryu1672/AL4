@@ -94,6 +94,10 @@ void GameScene::Update() {
 
 	if (enemy_->GetHp()<=0) {
 		isFinished = true;
+ 		isClear = true;
+	}
+	if (player_->GetHp()<=0) {
+		isFinished = true;
 	}
 
 #ifdef _DEBUG

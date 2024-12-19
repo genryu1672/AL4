@@ -48,6 +48,8 @@ public: // メンバ関数
 
 	bool IsFinished() const { return isFinished; }
 
+	bool IsClear() const { return isClear; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -85,6 +87,8 @@ private: // メンバ変数
 
 	//終了フラグ
 	bool isFinished = false;
+
+	bool isClear = false;
 
 	/// <summary>
 	/// ゲームシーン用

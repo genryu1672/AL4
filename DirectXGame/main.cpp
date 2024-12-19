@@ -8,18 +8,21 @@
 #include "TextureManager.h"
 #include "TitleScene.h"
 #include "WinApp.h"
+#include"Over.h"
 
 GameScene* gameScene = nullptr;
 TitleScene* titleScene = nullptr;
 Clear* clearScene_ = nullptr;
+Over* overScene_ = nullptr;
 
-// シーン(型)
+    // シーン(型)
 enum class Scene {
 	kUnknown = 0,
 
 	kTitle,
 	kGame,
 	kClear,
+	kOver,
 };
 
 // 現在シーン
@@ -166,14 +169,25 @@ void ChangeScene() {
 		break;
 	case Scene::kGame:
 		if (gameScene->IsFinished()) {
-			// シーン変更
-			scene = Scene::kClear;
-			// 旧シーンの開放
-			delete gameScene;
-			gameScene = nullptr;
-			// 新シーンの生成と初期化
-			clearScene_ = new Clear;
-			clearScene_->Initialize();
+			if (gameScene->IsClear()==true) {
+				// シーン変更
+				scene = Scene::kClear;
+				// 旧シーンの開放
+				delete gameScene;
+				gameScene = nullptr;
+				// 新シーンの生成と初期化
+				clearScene_ = new Clear;
+				clearScene_->Initialize();
+			}else{
+				// シーン変更
+				scene = Scene::kOver;
+				// 旧シーンの開放
+				delete gameScene;
+				gameScene = nullptr;
+				// 新シーンの生成と初期化
+				overScene_ = new Over;
+				overScene_->Initialize();
+			}
 		}
 		break;
 	case Scene::kClear:
@@ -183,6 +197,18 @@ void ChangeScene() {
 			// 旧シーンの開放
 			delete clearScene_;
 			clearScene_ = nullptr;
+			// 新シーンの生成と初期化
+			titleScene = new TitleScene;
+			titleScene->Initialize();
+		}
+		break;
+	case Scene::kOver:
+		if (overScene_->IsFinished()) {
+			// シーン変更
+			scene = Scene::kTitle;
+			// 旧シーンの開放
+			delete overScene_;
+			overScene_ = nullptr;
 			// 新シーンの生成と初期化
 			titleScene = new TitleScene;
 			titleScene->Initialize();
@@ -202,6 +228,8 @@ void UpdateScene() {
 	case Scene::kClear:
 		clearScene_->Update();
 		break;
+	case Scene::kOver:
+	overScene_->Update();
 	}
 }
 
@@ -215,6 +243,9 @@ void DrawScene() {
 		break;
 	case Scene::kClear:
 		clearScene_->Draw();
+		break;
+	case Scene::kOver:
+		overScene_->Draw();
 		break;
 	}
 }
