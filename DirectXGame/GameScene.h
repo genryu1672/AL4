@@ -10,6 +10,7 @@
 #include"Player.h"
 #include"DebugCamera.h"
 #include"Enemy.h"
+#include"Skydome.h"
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -74,7 +75,11 @@ private: // メンバ変数
 	//デバックカメラ
 	DebugCamera* debugCamera_ = nullptr;
 
+	//天球
+	Skydome* skyDome_=nullptr;
 
+	// 天球モデル
+	Model* modelSkydome = nullptr;
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
