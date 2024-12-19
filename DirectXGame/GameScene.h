@@ -46,6 +46,8 @@ public: // メンバ関数
 	//衝突判定と応答
 	void CheckAllCollisions();
 
+	bool IsFinished() const { return isFinished; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -80,6 +82,10 @@ private: // メンバ変数
 
 	// 天球モデル
 	Model* modelSkydome = nullptr;
+
+	//終了フラグ
+	bool isFinished = false;
+
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>

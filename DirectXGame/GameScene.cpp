@@ -92,6 +92,10 @@ void GameScene::Update() {
 	// 天球の更新
 	skyDome_->Update();
 
+	if (enemy_->GetHp()<=0) {
+		isFinished = true;
+	}
+
 #ifdef _DEBUG
 
 	if (input_->TriggerKey(DIK_SPACE)) {

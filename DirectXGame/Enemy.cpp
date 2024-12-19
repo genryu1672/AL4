@@ -98,7 +98,7 @@ void Enemy::Update() {
 		worldTransform_.translation_ += Vector3(0.0f,0.1f,0.0f);
 		break;
 	}
-
+	
 	for (std::shared_ptr<EnemyBullet> bullet : bullets_) {
 		bullet->Update();
 	}
@@ -164,4 +164,6 @@ Vector3 Enemy::GetWorldPosition()
 	return worldPos;
 }
 
-void Enemy::OnCollision() {}
+void Enemy::OnCollision() {
+	hp_--;
+}
