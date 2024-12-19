@@ -6,7 +6,11 @@
 #include <ViewProjection.h>
 #include <algorithm>
 #include <cassert>
+#ifdef _DEBUG
 #include <imgui.h>
+
+#endif // _DEBUG
+
 #include <numbers>
 /// <summary>
 /// 初期化
@@ -90,10 +94,14 @@ void Player::Update() {
 	//座標移動（ベクトルの加算）
 	 worldTransform_.translation_+=move;
 
-	//キャラクターの座標を画面表示する処理
+ #ifdef _DEBUG
+	 // キャラクターの座標を画面表示する処理
 	 ImGui::Begin("window");
 	 ImGui::DragFloat4("position", &worldTransform_.translation_.x, 0.1f);
 	 ImGui::End();
+
+#endif // _DEBUG
+
 	
 	//キーボード入力による移動処理
 
