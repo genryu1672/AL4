@@ -41,6 +41,12 @@ public://引数を書くところ
 
 	//衝突を検出したら呼び出されるコールバック関数
 	void OnCollision();
+
+	// 弾リストを取得
+	const std::list<std::shared_ptr<PlayerBullet>>& GetBullets() const { return bullets_; }
+
+	float GetRadius() { return radius_; }
+
 private://関数（メンバ変数）
 	
 
@@ -58,10 +64,9 @@ private://関数（メンバ変数）
 	Input* input_ = nullptr;
 
 	//弾
-	std::list<PlayerBullet*> bullets_;
+	std::list<std::shared_ptr<PlayerBullet>> bullets_;
+
+	float radius_ = 0.5f;
 
 	//ViewProjection* viewProjection_ = nullptr;
-
-	//弾リストを取得
-	const std::list<PlayerBullet*>& GetBullets() const { return bullets_; }
 };

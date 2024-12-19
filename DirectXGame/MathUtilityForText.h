@@ -13,3 +13,7 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vecto
 
 //ベクトル変換
 Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m);
+
+Vector3 Sphere(const Vector3& v, const Vector3& m);
+
+float Length(const Vector3& v);

@@ -2,6 +2,14 @@
 #include "TextureManager.h"
 #include <cassert>
 #include"AxisIndicator.h"
+
+Vector3 operator-(const Vector3& a, const Vector3& b) { 
+	return Vector3(a.x - b.x, a.y - b.y, a.z - b.z); 
+}
+
+
+
+
 GameScene::GameScene() {}
 
 GameScene::~GameScene() {
@@ -68,6 +76,7 @@ void GameScene::Update() {
 	//敵の更新
 	enemy_->Update();
 
+	CheckAllCollisions();
 
 	// デバックカメラの更新
 	debugCamera_->Update();
@@ -146,9 +155,83 @@ void GameScene::CheckAllCollisions()
 {
 	Vector3 posA,posB;
 
+
+	Vector3 A2B;
+	float len;
+	float radius;
 	//自弾リストの取得
-	const std::list<PlayerBullet*>& playerBullets = player_->GetBullets();
+	const std::list<std::shared_ptr<PlayerBullet>>& playerBullets = player_->GetBullets();
 
 	// 敵弾リストの取得
-	const std::list<EnemyBullet*>& enemyBullets = enemy_->GetBullets();
+	const std::list<std::shared_ptr<EnemyBullet>>& enemyBullets = enemy_->GetEnemyBullets();
+
+
+	// 自キャラと敵弾全ての当たり判定
+	for (std::shared_ptr<EnemyBullet> bullet : enemyBullets)
+	{
+		// 自キャラの座標
+		posA = player_->GetWorldPosition();
+
+		//敵弾の座標
+		posB = bullet->GetWorldPosition();
+
+		//座標AとBの距離
+		A2B = posA - posB;
+		len = Length(A2B);
+		radius = player_->GetRadius() + bullet->GetRadius();
+
+		//球と球の交差判定
+		if (len <= radius)
+		{
+			//自キャラの衝突時コールバックを呼び出す
+			player_->OnCollision();
+			//敵弾の衝突時コールバックを呼び出す
+			bullet->OnCollision();
+		}
+	}
+
+	for (std::shared_ptr<PlayerBullet> bullet : playerBullets) {
+		// 自キャラの座標
+		posA = enemy_->GetWorldPosition();
+
+		// 敵弾の座標
+		posB = bullet->GetWorldPosition();
+
+		// 座標AとBの距離
+		A2B = posA - posB;
+		len = Length(A2B);
+		radius = enemy_->GetRadius() + bullet->GetRadius();
+
+		// 球と球の交差判定
+		if (len <= radius) {
+			// 自キャラの衝突時コールバックを呼び出す
+			enemy_->OnCollision();
+			// 敵弾の衝突時コールバックを呼び出す
+			bullet->OnCollision();
+		}
+	}
+
+	for (std::shared_ptr<PlayerBullet> bullet : playerBullets) {
+		for (std::shared_ptr<EnemyBullet> bullet2 : enemyBullets) {
+			// 自キャラの座標
+			posA = bullet2->GetWorldPosition();
+
+			// 敵弾の座標
+			posB = bullet->GetWorldPosition();
+
+			// 座標AとBの距離
+			A2B = posA - posB;
+			len = Length(A2B);
+			radius = bullet2->GetRadius() + bullet->GetRadius();
+
+			// 球と球の交差判定
+			if (len <= radius) {
+				// 自キャラの衝突時コールバックを呼び出す
+				bullet2->OnCollision();
+				// 敵弾の衝突時コールバックを呼び出す
+				bullet->OnCollision();
+			}
+		}
+	}
+
 }

@@ -72,3 +72,19 @@ Vector3 TransformNormal(const Vector3& v, const Matrix4x4& m)
 	
 	return result;
 }
+
+//当たり判定
+Vector3 Sphere(const Vector3& v, const Vector3& m) {
+
+	Vector3 result;
+	result.x = (v.x - m.x) * (v.x - m.x);
+	result.y = (v.y - m.y) * (v.y - m.y);
+	result.z = (v.z - m.z) * (v.z - m.z);
+	return {result.x, result.y, result.z};
+}
+
+float Length(const Vector3& v) {
+	float result;
+	result = float(sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z)));
+	return result;
+}

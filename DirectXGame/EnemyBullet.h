@@ -22,6 +22,12 @@ public: // メンバ関数
 	// 衝突を検出したら呼び出されるコールバック関数
 	void OnCollision();
 
+	float GetRadius() { return radius_; }
+
+
+	// 自キャラのワールド座標を取得
+	Vector3 GetWorldPosition();
+
 private: // メンバ変数
 	
 	// ワールド変換データ
@@ -41,4 +47,6 @@ private: // メンバ変数
 	
 	//デスフラグ
 	bool isDead_ = false;
+
+	float radius_ = 0.5f;
 };

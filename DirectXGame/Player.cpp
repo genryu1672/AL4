@@ -48,13 +48,7 @@ void Player::Update() {
 	 const float kCharacterSpeed = 0.2f;
 
 	//デスフラグの立った弾を削除
-	 bullets_.remove_if([](PlayerBullet* bullet) {
-		 if (bullet->IsDead()) {
-			 delete bullet;
-			 return true;
-		 }
-		 return false;
-	 });
+	 bullets_.remove_if([](std::shared_ptr<PlayerBullet> bullet) { return bullet->IsDead(); });
 
 
 
@@ -89,10 +83,9 @@ void Player::Update() {
 	Rotate();
 
 	//弾更新
-	 for(PlayerBullet*bullet:bullets_)
-	{
+	for (std::shared_ptr<PlayerBullet> bullet : bullets_) {
 		bullet->Update();
-	 }
+	}
 
 	//座標移動（ベクトルの加算）
 	 worldTransform_.translation_+=move;
@@ -128,7 +121,7 @@ void Player::Draw(ViewProjection& viewProjection) {
 	model_->Draw(worldTransform_, viewProjection, textureHandle_);
 
 	// 弾描画
-	for (PlayerBullet* bullet : bullets_) {
+	for (std::shared_ptr<PlayerBullet> bullet : bullets_) {
 		bullet->Draw(viewProjection);
 	}
 }
@@ -217,7 +210,7 @@ void Player::Attack() {
 		velocity = TransformNormal(velocity, worldTransform_.matWorld_); // ベクトルの回転　TransformNormal
 
 		// 弾を生成し、初期化
-		PlayerBullet* newBullet = new PlayerBullet();
+		std::shared_ptr<PlayerBullet> newBullet(new PlayerBullet());
 		newBullet->Initialize(model_, worldTransform_.translation_, velocity);
 
 		// 弾を登録する
@@ -227,11 +220,7 @@ void Player::Attack() {
 
 Player::~Player() {
 
-	// bullet_の開放
-	for (PlayerBullet* bullet : bullets_) {
-		delete bullet;
-		// bullet->Draw(delete);
-	}
+	
 }
 
 //class Player
@@ -246,3 +235,5 @@ Vector3 Player::GetWorldPosition()
 
 	return worldPos;
 }
+
+void Player::OnCollision() {}

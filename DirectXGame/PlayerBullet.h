@@ -23,6 +23,10 @@ class PlayerBullet {
 	// 衝突を検出したら呼び出されるコールバック関数
 	void OnCollision();
 
+
+	Vector3 GetWorldPosition();
+
+	float GetRadius() { return radius_; }
 	private://メンバ変数
 	
 	// ワールド変換データ
@@ -42,4 +46,6 @@ class PlayerBullet {
 
 	//デスフラグ
 	bool isDead_=false;
+
+	float radius_ = 0.5f;
 };

@@ -29,6 +29,11 @@ public://引数を書くところ
 	// 衝突を検出したら呼び出されるコールバック関数
 	void OnCollision();
 		
+	// 弾リストを取得
+	const std::list<std::shared_ptr<EnemyBullet>>& GetEnemyBullets() const { return bullets_; }
+
+	float GetRadius() { return radius_; }
+
 private: // メンバ関数
 	
 	// ワールド変換データ
@@ -78,6 +83,5 @@ private: // メンバ関数
 	// 弾
 	std::list<EnemyBullet*> enemybullets_;
 
-	// 弾リストを取得
-	const std::list<EnemyBullet*>& GetEnemyBullets() const { return enemybullets_; }
+	float radius_ = 3.0f;
 };
