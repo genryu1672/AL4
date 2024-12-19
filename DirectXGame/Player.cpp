@@ -93,7 +93,7 @@ void Player::Update() {
 
 	//座標移動（ベクトルの加算）
 	 worldTransform_.translation_+=move;
-
+	 /
  #ifdef _DEBUG
 	 // キャラクターの座標を画面表示する処理
 	 ImGui::Begin("window");
