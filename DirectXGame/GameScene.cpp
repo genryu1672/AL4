@@ -41,6 +41,15 @@ void GameScene::Initialize() {
 	//ファイル名を指定してテクスチャを読み込む
 	textureHandle = TextureManager::Load("uvChecker.png");
 
+	// 音
+	music = audio_->LoadWave("BGM/bgm.wav");
+
+	audio_->PauseWave(music);
+
+	// 音声再生
+	playMusic = audio_->PlayWave(music,true);
+
+
 	//3Dモデルデータの生成
 	model_ = Model::Create();
 
@@ -95,9 +104,13 @@ void GameScene::Update() {
 	if (enemy_->GetHp()<=0) {
 		isFinished = true;
  		isClear = true;
+
+		audio_->StopWave(playMusic);
 	}
 	if (player_->GetHp()<=0) {
 		isFinished = true;
+
+		audio_->StopWave(playMusic);
 	}
 
 #ifdef _DEBUG

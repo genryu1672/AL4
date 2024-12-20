@@ -53,6 +53,4 @@ class TitleScene {
 
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
-
-
 };

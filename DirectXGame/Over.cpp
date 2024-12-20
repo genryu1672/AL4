@@ -20,15 +20,27 @@ void Over::Initialize() {
 	textureHandle_ = TextureManager::Load("over.png");
 
 	sprite = Sprite::Create(textureHandle_, {0, 0});
+
+
+	// 音
+	music = audio_->LoadWave("BGM/GameOver.wav");
+
+	audio_->PauseWave(music);
+
+	// 音声再生
+	playMusic = audio_->PlayWave(music, true);
+
+
 }
 
 void Over::Update() {
 	if (Input::GetInstance()->ReleseKey(DIK_SPACE)) {
 		finished_ = true;
+		audio_->StopWave(playMusic);
 	}
 
 	// タイマーを加算
-	timer_ += 1.0f / 60.0f;
+	//timer_ += 1.0f / 60.0f;
 
 	// 行列を更新
 }

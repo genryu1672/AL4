@@ -20,12 +20,19 @@ void Clear::Initialize() {
 
 	sprite = Sprite::Create(textureHandle_, {0, 0});
 
+	// 音
+	music = audio_->LoadWave("BGM/GameClear.wav");
 
+	audio_->PauseWave(music);
+
+	// 音声再生
+	playMusic = audio_->PlayWave(music, true);
 }
 
 void Clear::Update() {
 	if (Input::GetInstance()->ReleseKey(DIK_SPACE)) {
 		finished_ = true;
+		audio_->StopWave(playMusic);
 	}
 
 	// タイマーを加算

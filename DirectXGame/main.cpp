@@ -32,6 +32,7 @@ void ChangeScene();
 void UpdateScene();
 void DrawScene();
 
+
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	WinApp* win = nullptr;
@@ -90,6 +91,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	titleScene = new TitleScene;
 	titleScene->Initialize();
 
+
+
 	// メインループ
 	while (true) {
 		// メッセージ処理
@@ -105,6 +108,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		// gameScene->Update();
 
 		// titleScene->Update();
+
 
 		// シーン切り替え
 		ChangeScene();

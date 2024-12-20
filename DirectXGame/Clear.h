@@ -50,4 +50,11 @@ private:
 
 	uint32_t textureHandle_ = 0;
 	Sprite* sprite;
+
+
+	// 音
+	uint32_t music;
+
+	// 音声再生
+	uint32_t playMusic;
 };

@@ -45,8 +45,6 @@ void TitleScene::Update() {
 	
 	//行列を更新
 	worldTransformFont_.UpdateMatrix();
-
-
 }
 
 void TitleScene::Draw() {

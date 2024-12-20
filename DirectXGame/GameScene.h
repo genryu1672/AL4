@@ -90,6 +90,11 @@ private: // メンバ変数
 
 	bool isClear = false;
 
+	// 音
+	uint32_t music;
+
+	// 音声再生
+	uint32_t playMusic;
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
