@@ -7,9 +7,6 @@ Vector3 operator-(const Vector3& a, const Vector3& b) {
 	return Vector3(a.x - b.x, a.y - b.y, a.z - b.z); 
 }
 
-
-
-
 GameScene::GameScene() {}
 
 GameScene::~GameScene() {
@@ -29,6 +26,9 @@ GameScene::~GameScene() {
 
 	//天球の解放
 	delete skyDome_;
+
+	//レールカメラの開放
+	delete railCamera_;
 }
 
 void GameScene::Initialize() {

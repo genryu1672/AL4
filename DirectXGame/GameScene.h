@@ -11,6 +11,7 @@
 #include"DebugCamera.h"
 #include"Enemy.h"
 #include"Skydome.h"
+#include <RailCamera.h>
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -80,6 +81,10 @@ private: // メンバ変数
 
 	// 天球モデル
 	Model* modelSkydome = nullptr;
+
+	//レールカメラ
+	RailCamera* railCamera_ = nullptr;
+
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
