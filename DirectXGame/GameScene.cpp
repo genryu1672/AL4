@@ -75,6 +75,13 @@ void GameScene::Initialize() {
 	modelSkydome = Model::CreateFromOBJ("SkyDome", true);
 	skyDome_ = new Skydome();
 	skyDome_->Initialize(modelSkydome, &viewProjection_);
+
+	//レールカメラの生成
+	railCamera_ = new RailCamera();
+	railCamera_->Initialize(Vector3(0, 0, -50), Vector3(0, 0, 0));
+
+	//自キャラとレールカメラの親子関係を結ぶ
+	//player_->SetParent(&railCamera_->GetWorldMatrix());
 }
 
 void GameScene::Update() {
@@ -92,6 +99,9 @@ void GameScene::Update() {
 	// 天球の更新
 	skyDome_->Update();
 
+	//レールカメラの更新
+	railCamera_->Update();
+
 #ifdef _DEBUG
 
 	if (input_->TriggerKey(DIK_SPACE)) {
@@ -107,7 +117,12 @@ void GameScene::Update() {
 		viewProjection_.TransferMatrix();
 	} else {
 		// ビュープロジェクション行列の更新と転送
-		viewProjection_.UpdateMatrix();
+		//viewProjection_.UpdateMatrix();
+
+		viewProjection_.matView = railCamera_->GetViewProjection().matView;
+		viewProjection_.matProjection = railCamera_->GetViewProjection().matProjection;
+		// ビュープロジェクションの転送
+		viewProjection_.TransferMatrix();
 	}
 }
 
