@@ -29,6 +29,8 @@ GameScene::~GameScene() {
 
 	//天球の解放
 	delete skyDome_;
+
+	delete modelSkydome;
 }
 
 void GameScene::Initialize() {
