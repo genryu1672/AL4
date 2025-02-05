@@ -20,5 +20,5 @@ public:
 	 WorldTransform worldTransform_;
 
 	 // ビュープロジェクション
-	 ViewProjection* viewProjection_ = nullptr;
+	 ViewProjection viewProjection_;// ViewProjection* viewProjection_ = nullptr;
 };
