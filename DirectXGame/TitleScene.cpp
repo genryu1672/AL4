@@ -9,7 +9,7 @@ TitleScene::~TitleScene() {
 
 }
 
-
+//
 void TitleScene::Initialize() {
 
 	dxCommon_ = DirectXCommon::GetInstance();
